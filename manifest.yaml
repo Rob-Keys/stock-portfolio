@@ -1,0 +1,8 @@
+---
+id: stock-portfolio
+name: Stock Portfolio
+summary: Track your actual stock positions
+desc: Track the value and daily movement of up to five stock or ETF positions. No API key required.
+author: Rob Keys
+fileName: stockPortfolio.star
+packageName: stockportfolio
