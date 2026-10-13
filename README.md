@@ -2,6 +2,8 @@
 
 Stock Portfolio is a Tidbyt applet for tracking the market value and daily movement of real stock and ETF positions.
 
+![App preview](stockPortfolio.gif)
+
 Configure up to five positions with a ticker symbol and the number of shares held. The app calculates a share-weighted portfolio total and shows a scrolling ticker for each holding with its current position value and daily percentage move.
 
 The main portfolio line can be configured to show:

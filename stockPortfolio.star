@@ -43,6 +43,14 @@ def parse_shares(value):
     return float(str(value).strip())
 
 
+def format_one_decimal(amount):
+    sign = "-" if amount < 0 else ""
+    rounded = int((abs(amount) * 10) + 0.5) / 10.0
+    if rounded == int(rounded):
+        return sign + str(int(rounded)) + ".0"
+    return sign + str(rounded)
+
+
 def fetch_quote(symbol):
     response = http.get(
         QUOTE_URL + symbol,
@@ -50,6 +58,9 @@ def fetch_quote(symbol):
             "range": "2d",
             "interval": "1d",
             "events": "div,splits",
+        },
+        headers = {
+            "User-Agent": "Mozilla/5.0",
         },
         ttl_seconds = QUOTE_CACHE_SECONDS,
     )
@@ -99,10 +110,10 @@ def format_compact_currency(amount):
     absolute = abs(amount)
 
     if absolute >= 1000000:
-        return sign + "$" + ("%.1f" % (absolute / 1000000)) + "m"
+        return sign + "$" + format_one_decimal(absolute / 1000000) + "m"
     if absolute >= 1000:
-        return sign + "$" + ("%.1f" % (absolute / 1000)) + "k"
-    return sign + "$" + ("%.0f" % absolute)
+        return sign + "$" + format_one_decimal(absolute / 1000) + "k"
+    return sign + "$" + str(int(absolute + 0.5))
 
 
 def format_signed_currency(amount):
@@ -113,8 +124,8 @@ def format_signed_currency(amount):
 
 def format_percent(percent):
     if percent > 0:
-        return "+" + ("%.1f" % percent) + "%"
-    return ("%.1f" % percent) + "%"
+        return "+" + format_one_decimal(percent) + "%"
+    return format_one_decimal(percent) + "%"
 
 
 def summary_text(mode, value, change, percent):
